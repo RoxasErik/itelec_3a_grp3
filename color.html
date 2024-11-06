@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>home</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="css/style.css">
+
+</head>
+<style>
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #3f0101;
+    color: rgb(53, 2, 2);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.game-container {
+    text-align: center;
+    background-color: #b67a7a;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    margin-left: 10%;
+}
+
+.color-box {
+    width: 400px;
+    height: 250px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.choices {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #ac1737;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #000;
+}
+
+button:hover {
+    background-color: #bd7883;
+}
+
+/* Score and timer styling */
+#score, #timer {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+</style>
+<body>
+
+
+
+
+
+<div class="side-bar">
+
+   <div id="close-btn">
+      <i class="fas fa-times"></i>
+   </div>
+
+   <div class="profile">
+      <img src="images/pic-1.jpg" class="image" alt="">
+      <h3 class="name">John</h3>
+      <p class="role">Parent</p>
+      <a href="profile.html" class="btn">view profile</a>
+   </div>
+
+   <nav class="navbar">
+      <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+      <a href="lessons.html"><i class="fas fa-graduation-cap"></i><span>Lessons</span></a>
+      <a href="books.html"><i class="fas fa-chalkboard-user"></i><span>Library</span></a>
+      <a href="games.html"><i class="fas fa-headset"></i><span>Games</span></a>
+       <a href="about.html"><i class="fas fa-question"></i><span>About Us</span></a>
+   </nav>
+
+</div>
+
+<div class="game-container">
+    <h1>Color Matching Game</h1>
+    <div class="color-box" id="colorBox"></div>
+    <div class="choices" id="choices"></div>
+    <div id="timer">Time Left: 30</div>
+    <div id="score">Score: 0</div>
+    <button id="startBtn">Start Game</button>
+</div>
+
+
+<div class="" id="finish">
+    <button class="redirect-btn" onclick="redirectWithMessage()">Finish</button>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- custom js file link  -->
+<script >
+    
+const colorBox = document.getElementById('colorBox');
+const choicesContainer = document.getElementById('choices');
+const timerElement = document.getElementById('timer');
+const scoreElement = document.getElementById('score');
+const startBtn = document.getElementById('startBtn');
+
+let score = 0;
+let timeLeft = 30;
+let isPlaying = false;
+let colorOptions = ['Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Orange', 'Pink'];
+let interval;
+
+// Start Game Function
+startBtn.addEventListener('click', startGame);
+
+function startGame() {
+    if (isPlaying) return;
+    
+    isPlaying = true;
+    score = 0;
+    timeLeft = 30;
+    scoreElement.textContent = `Score: ${score}`;
+    timerElement.textContent = `Time Left: ${timeLeft}`;
+    
+    startBtn.style.display = 'none'; // Hide start button during game
+    startTimer();
+    generateColor();
+}
+
+// Timer Countdown Function
+function startTimer() {
+    interval = setInterval(() => {
+        timeLeft--;
+        timerElement.textContent = `Time Left: ${timeLeft}`;
+        if (timeLeft === 0) {
+            clearInterval(interval);
+            endGame();
+        }
+    }, 1000);
+}
+
+// Function to generate random color and choices
+function generateColor() {
+    const correctColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+    const shuffledChoices = shuffleArray([...colorOptions]);
+
+    // Set random background color
+    colorBox.style.backgroundColor = correctColor.toLowerCase();
+
+    // Clear previous choices
+    choicesContainer.innerHTML = '';
+
+    // Generate choice buttons
+    shuffledChoices.forEach(color => {
+        const button = document.createElement('button');
+        button.textContent = color;
+        button.addEventListener('click', () => checkAnswer(color, correctColor));
+        choicesContainer.appendChild(button);
+    });
+}
+
+// Function to check if user selected the correct answer
+function checkAnswer(selectedColor, correctColor) {
+    if (selectedColor === correctColor) {
+        score++;
+        scoreElement.textContent = `Score: ${score}`;
+        generateColor();
+    } else {
+        endGame();
+    }
+}
+
+// End Game Function
+function endGame() {
+    isPlaying = false;
+    startBtn.style.display = 'block'; // Show start button again
+    alert(`Game Over! Your Score: ${score}`);
+}
+
+// Utility function to shuffle an array
+function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+
+const message = "Your score is: "+" "+score;
+        const redirectUrl = "games.html"; // Replace with your desired URL
+
+        function redirectWithMessage() {
+            alert(message); // Display the message
+            setTimeout(() => {
+                window.location.href = redirectUrl; // Redirect after 3 seconds
+            }, 3000);
+        }
+
+</script>
+
+   
+</body>
+</html>
