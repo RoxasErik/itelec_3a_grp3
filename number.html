@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counting Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="Style.css">
+ 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: maroon;
+            text-align: center;
+            margin: 0;
+            
+            color: white;
+        }
+        .game-container {
+            margin: 20px auto;
+            max-width: 600px;
+            background: #c2bebe;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+            
+          
+        }
+
+        .game-container p{
+          font-size: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        input {
+            font-size: 18px;
+            padding: 10px;
+            width: 80px;
+            margin: 20px 0;
+            
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .scoreboard {
+            font-size: 20px;
+            margin-top: 0px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+        .result.wrong {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+  <header class="header">
+   
+    <section class="flex">
+ 
+         <a href="home.html" class="logo">
+     <img src="images/starlogo.png"/>
+ </a>
+ 
+ 
+       <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+       </div>
+ 
+       <div class="profile">
+          <img src="images/pic-1.jpg" class="image" alt="">
+          <h3 class="name">John</h3>
+          <p class="role">Parent</p>
+          <a href="profile.html" class="btn">view profile</a>
+          <div class="flex-btn">
+             <a href="login.html" class="option-btn">login</a>
+             <a href="register.html" class="option-btn">register</a>
+          </div>
+       </div>
+ 
+    </section>
+ 
+ </header>   
+ 
+ <div class="side-bar">
+ 
+    <div id="close-btn">
+       <i class="fas fa-times"></i>
+    </div>
+ 
+    <div class="profile">
+       <img src="images/pic-1.jpg" class="image" alt="">
+       <h3 class="name">John</h3>
+       <p class="role">Parent</p>
+       <a href="profile.html" class="btn">view profile</a>
+    </div>
+ 
+    <nav class="navbar">
+   <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+       <a href="lessons.html"><i class="fas fa-graduation-cap"></i><span>Lessons</span></a>
+       <a href="books.html"><i class="fas fa-chalkboard-user"></i><span>Library</span></a>
+       <a href="games.html"><i class="fas fa-headset"></i><span>Games</span></a>
+        <a href="about.html"><i class="fas fa-question"></i><span>About Us</span></a>
+    </nav>
+ 
+ </div>
+
+   
+   
+    <div class="game-container">
+      <div class="scoreboard">
+        <h1>Counting Game</h1>
+          <p>High Score: <span id="highScore">0</span></p>
+          <p>Score: <span id="score">0</span></p>
+      </div>
+        <img id="gameImage" src="" alt="Count the objects">
+        <p>How many objects do you see?</p>
+        <input type="number" id="userInput" min="1" max="10">
+        <button onclick="checkAnswer()">Submit</button>
+        <div class="result" id="resultMessage"></div>
+    </div>
+
+
+    <footer class="footer">
+
+      <span>Star Academy</span> 
+   
+   </footer>
+  </body>
+    <script>
+        // Game data
+        const gameData = [
+            { count: 3, image: "https://via.placeholder.com/300?text=3+Objects" },
+            { count: 5, image: "https://via.placeholder.com/300?text=5+Objects" },
+            { count: 7, image: "https://via.placeholder.com/300?text=7+Objects" },
+            { count: 2, image: "https://via.placeholder.com/300?text=2+Objects" },
+            { count: 10, image: "https://via.placeholder.com/300?text=10+Objects" },
+            { count: 6, image: "https://via.placeholder.com/300?text=6+Objects" },
+            { count: 8, image: "https://via.placeholder.com/300?text=8+Objects" },
+            { count: 4, image: "https://via.placeholder.com/300?text=4+Objects" },
+            { count: 1, image: "https://via.placeholder.com/300?text=1+Object" },
+            { count: 9, image: "https://via.placeholder.com/300?text=9+Objects" },
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+        let highScore = 0;
+
+        // Shuffle game data
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Load the current game
+        function loadGame() {
+            const currentGame = gameData[currentIndex];
+            document.getElementById('gameImage').src = currentGame.image;
+            document.getElementById('userInput').value = "";
+            document.getElementById('resultMessage').textContent = "";
+        }
+
+        // Check the user's answer
+        function checkAnswer() {
+            const userInput = parseInt(document.getElementById('userInput').value, 10);
+            const correctAnswer = gameData[currentIndex].count;
+
+            if (userInput === correctAnswer) {
+                document.getElementById('resultMessage').textContent = "Correct! 🎉";
+                document.getElementById('resultMessage').classList.remove('wrong');
+                score++;
+                document.getElementById('score').textContent = score;
+                currentIndex++;
+                if (currentIndex < gameData.length) {
+                    setTimeout(loadGame, 1000);
+                } else {
+                    document.getElementById('resultMessage').textContent = "Congratulations! You've completed the game!";
+                }
+            } else {
+                document.getElementById('resultMessage').textContent = "Wrong! 😞";
+                document.getElementById('resultMessage').classList.add('wrong');
+                const playAgain = confirm("Wrong answer! Your score is ${score}. Do you want to play again?");
+                if (playAgain) {
+                    if (score > highScore) {
+                        highScore = score;
+                        document.getElementById('highScore').textContent = highScore;
+                    }
+                    score = 0;
+                    document.getElementById('score').textContent = score;
+                    currentIndex = 0;
+                    shuffle(gameData); // Reshuffle game data
+                    loadGame();
+                } else {
+
+                    const my_const = highScore;
+                    localStorage.setItem('numberscore', my_const);
+                    window.location.href = "games.html"; // Redirect to another page
+                }
+            }
+        }
+
+        // Initialize game
+        window.onload = function () {
+            shuffle(gameData); // Shuffle game data
+            loadGame(); // Load the first game
+        };
+    </script>
+    <script src="js/script.js"></script>
+
+
+</html>

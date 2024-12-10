@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Shape</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="style.css">
+ 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: maroon;
+            margin: 0;
+            padding: 0;
+               justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .game-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+            margin-top: 2.5%;
+            margin-left: 40%;
+            
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .shape {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+        }
+        .shape.circle {
+            border-radius: 50%;
+            background-color: crimson;
+        }
+        .shape.square {
+            background-color: steelblue;
+        }
+        .shape.rectangle {
+            background-color: seagreen;
+            width: 150px;
+        }
+        .shape.triangle {
+            width: 0;
+            height: 0;
+            background-color: transparent;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid orange;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #ddd;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #bbb;
+        }
+        .scoreboard {
+            margin-bottom: 20px;
+        }
+        .scoreboard p {
+            margin: 5px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+  <header class="header">
+   
+    <section class="flex">
+ 
+         <a href="home.html" class="logo">
+     <img src="images/starlogo.png"/>
+ </a>
+ 
+ 
+       <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+       </div>
+ 
+       <div class="profile">
+          <img src="images/pic-1.jpg" class="image" alt="">
+          <h3 class="name">John</h3>
+          <p class="role">Parent</p>
+          <a href="profile.html" class="btn">view profile</a>
+          <div class="flex-btn">
+             <a href="login.html" class="option-btn">login</a>
+             <a href="register.html" class="option-btn">register</a>
+          </div>
+       </div>
+ 
+    </section>
+ 
+ </header>   
+ 
+ <div class="side-bar">
+ 
+    <div id="close-btn">
+       <i class="fas fa-times"></i>
+    </div>
+ 
+    <div class="profile">
+       <img src="images/pic-1.jpg" class="image" alt="">
+       <h3 class="name">John</h3>
+       <p class="role">Parent</p>
+       <a href="profile.html" class="btn">view profile</a>
+    </div>
+ 
+    <nav class="navbar">
+   <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+       <a href="lessons.html"><i class="fas fa-graduation-cap"></i><span>Lessons</span></a>
+       <a href="books.html"><i class="fas fa-chalkboard-user"></i><span>Library</span></a>
+       <a href="games.html"><i class="fas fa-headset"></i><span>Games</span></a>
+        <a href="about.html"><i class="fas fa-question"></i><span>About Us</span></a>
+    </nav>
+ 
+ </div>
+
+
+    <div class="game-container">
+        <h1>Guess the Shape</h1>
+        <div class="scoreboard">
+            <p>High Score: <span id="highScore">0</span></p>
+            <p>Score: <span id="score">0</span></p>
+        </div>
+        <div id="shape" class="shape"></div>
+        <div id="choices"></div>
+    </div>
+
+    <footer class="footer">
+
+      <span>Star Academy</span> 
+   
+   </footer>
+  </body>
+    <script src="js/script.js"></script>
+
+    <script>
+        // Define the shapes
+        const shapes = [
+            { name: "circle", className: "circle" },
+            { name: "square", className: "square" },
+            { name: "rectangle", className: "rectangle" },
+            { name: "triangle", className: "triangle" }
+        ];
+
+        let score = 0;
+        let highscore = 0;
+        let correctShape;
+
+        function getRandomShape() {
+            const randomIndex = Math.floor(Math.random() * shapes.length);
+            return shapes[randomIndex];
+        }
+
+        function generateChoices(correctShape) {
+            const choices = [correctShape];
+            while (choices.length < 4) {
+                const randomShape = getRandomShape();
+                if (!choices.includes(randomShape)) {
+                    choices.push(randomShape);
+                }
+            }
+            return choices.sort(() => Math.random() - 0.5);
+        }
+
+        function loadGame() {
+            const shapeContainer = document.getElementById("shape");
+            const choicesContainer = document.getElementById("choices");
+
+            // Get a random shape
+            correctShape = getRandomShape();
+
+            // Set the shape's class
+            shapeContainer.className = `shape ${correctShape.className}`;
+
+            // Generate multiple choices
+            const choices = generateChoices(correctShape);
+            choicesContainer.innerHTML = "";
+
+            // Create buttons for each choice
+            choices.forEach(choice => {
+                const button = document.createElement("button");
+                button.textContent = choice.name.toUpperCase();
+                button.onclick = () => checkAnswer(choice.name);
+                choicesContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedShape) {
+            if (selectedShape === correctShape.name) {
+                alert("Correct!");
+                score++;
+                if (score > highscore) {
+                    highscore = score;
+                    document.getElementById("highscore").textContent = highscore;
+                }
+            } else {
+                alert(`Wrong! The correct answer was ${correctShape.name.toUpperCase()}.`);
+                const playAgain = confirm(`Your score is ${score}. Do you want to play again?`);
+                if (playAgain) {
+                    score = 0;
+                } else {
+                    const shapescr = highscore;
+                    localStorage.setItem('shapescore', shapescr);
+
+                    window.location.href = "games.html"; // Redirect to another page
+                }
+            }
+            document.getElementById("score").textContent = score;
+            loadGame(); // Load a new game
+        }
+
+        // Initialize the game
+        window.onload = loadGame;
+
+         </script>
+
+</html>

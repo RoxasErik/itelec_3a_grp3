@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Color</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="style.css">
+ 
+  
+    <style>
+        body  {
+            margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+         align-items: center; /* Center horizontally */
+        justify-content: center; /* Center vertically */
+        height: 100vh; /* Make the body take up the full viewport height */
+        background-color: maroon;
+        text-align: center;
+        overflow: hidden; /* Prevent scrolling */
+        }
+        .header{
+   position: sticky;
+   top:0; left:0; right: 0;
+   background-color: var(--white);
+   z-index: 1000;
+   border-bottom: var(--border);
+   padding-top: 1px;
+}
+
+.header .flex{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   position: relative;
+   padding: 1.5rem 2rem;
+}
+
+.header .flex .logo{
+   font-size: 2.5rem;
+   color: var(--black);
+}
+
+.header .flex .search-form{
+   width: 50rem;
+   border-radius: .5rem;
+   background-color: var(--light-bg);
+   padding:1.5rem 2rem;
+   display: flex;
+   gap:2rem;
+
+}
+
+.header .flex .search-form input{
+   width: 100%;
+   font-size: 1.8rem;
+   color:var(--black);
+   background:none;
+}
+
+.header .flex .search-form button{
+   background:none;
+   font-size: 2rem;
+   cursor: pointer;
+   color:var(--black);
+}
+
+.header .flex .search-form button:hover{
+   color: var(--main-color);
+}
+
+.header .flex .icons div{
+   font-size: 2rem;
+   color:var(--black);
+   background-color: var(--light-bg);
+   border-radius: .5rem;
+   height: 4.5rem;
+   width: 4.5rem;
+   line-height: 4.5rem;
+   cursor: pointer;
+   text-align: center;
+   margin-left: .7rem;
+}
+
+.header .flex .icons div:hover{
+   background-color: var(--black);
+   color:var(--white);
+}
+
+.header .flex .profile{
+   position: absolute;
+   top:120%; right: 2rem;
+   background-color: var(--white);
+   border-radius: .5rem;
+   padding: 1.5rem;
+   text-align: center;
+   overflow: hidden;
+   transform-origin: top right;
+   transform: scale(0);
+   transition: .2s linear;
+   width: 30rem;
+}
+
+.header .flex .profile.active{
+   transform: scale(1);
+}
+
+.header .flex .profile .image{
+   height: 10rem;
+   width: 10rem;
+   border-radius: 50%;
+   object-fit: contain;
+   margin-bottom: 1rem;
+}
+
+.header .flex .profile .name{
+   font-size: 2rem;
+   color:var(--black);
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
+.header .flex .profile .role{
+   font-size: 1.8rem;
+   color: var(--light-color);
+}
+  
+        .game-container {
+            background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 90%;  
+        margin-top: 38px;
+        margin-left: 38%;
+    
+    
+    }
+        h1 {
+            margin: 0 0 5px;
+            font-size: 15px;
+        }
+        .color-box {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            
+            display: block;
+            width: 100%;
+            margin: 1px 0;
+            
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #eee;
+            color: #333;
+            transition: all 0.3s ease;
+            flex: 1; /* Allow buttons to grow evenly */
+        min-width: 100px; /* Prevent buttons from shrinking too much */
+ 
+        }
+        button:hover {
+            background-color: #ddd;
+        }
+        .scoreboard {
+            margin-bottom: 0px;
+        }
+        .scoreboard p {
+            margin: 5px;
+            font-size: 20px;
+        }
+        #choices {
+        font-size: 30px;
+        display: flex; /* Enable flexbox */
+        justify-content: space-between; /* Add spacing between buttons */
+        gap: 10px; /* Add consistent spacing between buttons */
+        flex-wrap: wrap; /* Allow wrapping if needed on smaller screens */
+    }
+    button {
+        flex: 1; /* Allow buttons to grow evenly */
+        min-width: 100px; /* Prevent buttons from shrinking too much */
+    }
+    </style>
+    
+</head>
+
+<body>
+
+    
+    <header class="header">
+   
+        <section class="flex">
+     
+             <a href="home.html" class="logo">
+         <img src="images/starlogo.png"/>
+     </a>
+     
+     
+           <div class="icons">
+              <div id="menu-btn" class="fas fa-bars"></div>
+              <div id="search-btn" class="fas fa-search"></div>
+              <div id="user-btn" class="fas fa-user"></div>
+              <div id="toggle-btn" class="fas fa-sun"></div>
+           </div>
+     
+           <div class="profile">
+              <img src="images/pic-1.jpg" class="image" alt="">
+              <h3 class="name">John</h3>
+              <p class="role">Parent</p>
+              <a href="profile.html" class="btn">view profile</a>
+              <div class="flex-btn">
+                 <a href="login.html" class="option-btn">login</a>
+                 <a href="register.html" class="option-btn">register</a>
+              </div>
+           </div>
+     
+        </section>
+     
+     </header>   
+     
+     <div class="side-bar">
+     
+        <div id="close-btn">
+           <i class="fas fa-times"></i>
+        </div>
+     
+        <div class="profile">
+           <img src="images/pic-1.jpg" class="image" alt="">
+           <h3 class="name">John</h3>
+           <p class="role">Parent</p>
+           <a href="profile.html" class="btn">view profile</a>
+        </div>
+     
+        <nav class="navbar">
+       <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+           <a href="lessons.html"><i class="fas fa-graduation-cap"></i><span>Lessons</span></a>
+           <a href="books.html"><i class="fas fa-chalkboard-user"></i><span>Library</span></a>
+           <a href="games.html"><i class="fas fa-headset"></i><span>Games</span></a>
+            <a href="about.html"><i class="fas fa-question"></i><span>About Us</span></a>
+        </nav>
+     
+     </div>
+
+
+
+    <div class="game-container">
+        <h1>Guess the Color</h1>
+        <div class="scoreboard">
+            <p>High Score: <span id="highscore">0</span></p>
+            <p>Score: <span id="score">0</span></p>
+          
+        </div>
+        <div class="color-box" id="colorBox"></div>
+        
+        <div id="choices"></div>
+    </div>
+
+
+    <footer class="footer">
+
+        <span>Star Academy</span> 
+     
+     </footer>
+
+
+    <script>
+        // List of colors
+        const colors = [
+            "red", "blue", "green", "yellow", "purple", 
+            "pink", "orange", "brown", "black", "white"
+        ];
+
+        let score = 0;
+        let highscore = 0;
+
+        function getRandomColor() {
+            const randomIndex = Math.floor(Math.random() * colors.length);
+            return colors[randomIndex];
+        }
+
+        function generateChoices(correctColor) {
+            const choices = [correctColor];
+            while (choices.length < 4) {
+                const randomColor = getRandomColor();
+                if (!choices.includes(randomColor)) {
+                    choices.push(randomColor);
+                }
+            }
+            return choices.sort(() => Math.random() - 0.5);
+        }
+
+        function loadGame() {
+            const colorBox = document.getElementById('colorBox');
+            const choicesContainer = document.getElementById('choices');
+            const correctColor = getRandomColor();
+
+            // Set the background color of the color box
+            colorBox.style.backgroundColor = correctColor;
+
+            // Generate multiple choices
+            const choices = generateChoices(correctColor);
+            choicesContainer.innerHTML = "";
+
+            // Display buttons for each choice
+            choices.forEach(color => {
+                const button = document.createElement('button');
+                button.textContent = color.toUpperCase();
+                button.onclick = () => checkAnswer(color, correctColor);
+                choicesContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedColor, correctColor) {
+            if (selectedColor === correctColor) {
+                alert("Correct!");
+                score++;
+                if (score > highscore) {
+                    highscore = score;
+                    document.getElementById('highscore').textContent = highscore;
+                }
+            } else {
+                alert(`Wrong! The correct answer was ${correctColor.toUpperCase()}.`);
+                const playAgain = confirm(`Your score is ${score}. Do you want to play again?`);
+                if (playAgain) {
+                    score = 0;
+                } else {
+                    window.location.href = "games.html"; // Redirect to another page
+                    const my_const = highscore;
+                    localStorage.setItem('colorscore', my_const);
+                }
+            }
+            document.getElementById('score').textContent = score;
+            loadGame(); // Load a new game
+        }
+
+        // Initialize the game
+        window.onload = function () {
+            loadGame();
+        };
+
+    </script>
+      <script src="js/script.js"></script>
+
+</body>
+</html>

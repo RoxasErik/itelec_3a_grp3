@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>profile</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<style>
+  
+
+
+
+</style>
+<header class="header">
+   
+   <section class="flex">
+    <div class="icons">
+        <div id="menu-btn" class="fas fa-bars"></div>
+    </div>
+    
+    
+       <a href="home.html" class="logo">
+    <img src="images/starlogo.png"/>
+</a>
+
+      <form action="search.html" method="post" class="search-form">
+         <input type="text" name="search_box" required placeholder="search courses..." maxlength="100">
+         <button type="submit" class="fas fa-search"></button>
+      </form>
+
+      <div class="icons">
+           <div id="search-btn" class="fas fa-search"></div>
+         <div id="user-btn" class="fas fa-user"></div>
+         <div id="toggle-btn" class="fas fa-sun"></div>
+      </div>
+
+      <div class="profile">
+         <img src="images/pic-1.jpg" class="image" alt="">
+         <h3 class="name">John</h3>
+         <p class="role">Parent</p>
+         <a href="profile.html" class="btn">view profile</a>
+         <div class="flex-btn">
+            <a href="login.html" class="option-btn">login</a>
+            <a href="register.html" class="option-btn">register</a>
+         </div>
+      </div>
+
+      
+
+   </section>
+
+</header>   
+
+<div class="side-bar">
+
+   <div id="close-btn">
+      <i class="fas fa-times"></i>
+   </div>
+
+   <div class="profile">
+      <img src="images/pic-1.jpg" class="image" alt="">
+      <h3 class="name">John</h3>
+      <p class="role">Parent</p>
+      <a href="profile.html" class="btn">view profile</a>
+   </div>
+   
+
+   <nav class="navbar">
+  <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+      <a href="lessons.html"><i class="fas fa-graduation-cap"></i><span>Lessons</span></a>
+      <a href="books.html"><i class="fas fa-chalkboard-user"></i><span>Library</span></a>
+      <a href="games.html"><i class="fas fa-headset"></i><span>Games</span></a>
+       <a href="about.html"><i class="fas fa-question"></i><span>About Us</span></a>
+   </nav>
+
+</div>
+
+<section class="user-profile">
+
+   <h1 class="heading">your profile</h1>
+
+   <div class="info">
+
+      <div class="user">
+         <img src="images/pic-1.jpg" alt="">
+         <h3>John</h3>
+         <p>Parent</p>
+         <a href="update.html" class="inline-btn">update profile</a>
+      </div>
+
+
+      <div class="card-grid">
+         
+      <div class="card">
+         <img src="/images/letters.png" alt="Avatar" style="width:100%">
+         <div class="container">
+            
+           <h4><b>Alphabet Grade</b></h4> 
+           <p>Architect & Engineer</p> 
+         </div>
+         <div class="progress-container">
+            <div id="progressBar1" class="progress-bar"></div>
+        </div>
+       </div>
+       
+      
+
+
+
+         <div class="card">
+            <img src="/images/numbers.jpg" alt="Avatar" style="width:100%">
+            <div class="container">
+              <h4><b>Number Grade</b></h4> 
+              <p>Architect & Engineer</p> 
+            </div>
+            <div class="progress-container">
+               <div id="progressBar2" class="progress-bar"></div>
+           </div>
+          </div>
+         
+        
+
+
+         
+            <div class="card">
+               <img src="/images/color.jpg" alt="Avatar" style="width:100%">
+               <div class="container">
+                 <h4><b>Color Grade</b></h4> 
+                 <p>Architect & Engineer</p> 
+               </div>
+               <div class="progress-container">
+                  <div id="progressBar3" class="progress-bar"></div>
+              </div>
+             </div>
+             
+            
+
+
+            
+            
+               <div class="card">
+                  <img src="/images/shapes.jpg" alt="Avatar" style="width:100%">
+                  <div class="container">
+                    <h4><b>Shape Grade</b></h4> 
+                    <p>Architect & Engineer</p> 
+                  </div>
+                  <div class="progress-container">
+                     <div id="progressBar4" class="progress-bar"></div>
+                 </div>
+                </div>
+
+                
+
+
+
+               </div>
+               
+       
+      
+       
+       
+       
+      
+   </div>
+
+</section>
+
+
+<footer class="footer">
+
+<span>Star Academy</span> 
+
+</footer>
+
+<!-- custom js file link  -->
+<script src="js/script.js">
+   
+</script>
+<script>
+
+   const scr1 = localStorage.getItem(scoring1);
+   const scr2 = localStorage.getItem(scoring2);
+   const scr3 = localStorage.getItem(scoring3);
+
+   const shape_score = localStorage.getItem('shapescore');
+   const color_score = localStorage.getItem('colorscore');
+   const number_score = localStorage.getItem('numberscore');
+
+   const as = scr1+scr2+scr3;
+let progressValues = [as, number_score, color_score, shape_score]; // Adjust these values as needed
+
+// Update each progress bar
+progressValues.forEach((value, index) => {
+    const progressBar = document.getElementById(`progressBar${index + 1}`);
+    progressBar.style.width = value + '%';
+    progressBar.textContent = value + '%';
+});
+</script>
+   
+</body>
+</html>
